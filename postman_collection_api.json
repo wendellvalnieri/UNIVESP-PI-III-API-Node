@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "7ccdacaf-be3d-4555-9419-a1b48715c0d7",
+		"name": "Wendell",
+		"description": "Coleção para realizar o CRUD de produtos, serviços e login.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19411025"
+	},
+	"item": [
+		{
+			"name": "CRUD Produtos",
+			"item": [
+				{
+					"name": "Criar Produto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Produto 1\",\n    \"price\": 10.99,\n    \"description\": \"Descrição do produto 1\",\n    \"estoque\": 100\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Produtos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/produtos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Produto por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/produtos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"produtos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produto",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Produto Atualizado\",\n    \"price\": 15.99,\n    \"description\": \"Descrição atualizada do produto\",\n    \"estoque\": 150\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/produtos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"produtos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4333/produtos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"produtos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD Serviços",
+			"item": [
+				{
+					"name": "Criar Serviço",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Serviço 1\",\n    \"price\": 29.99,\n    \"description\": \"Descrição do serviço 1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/servicos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"servicos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Serviços",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/servicos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"servicos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Serviço por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/servicos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"servicos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Serviço",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Serviço Atualizado\",\n    \"price\": 35.99,\n    \"description\": \"Descrição atualizada do serviço\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/servicos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"servicos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Serviço",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4333/servicos/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"servicos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD Usuários",
+			"item": [
+				{
+					"name": "Criar Usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"senha123\",\n    \"last_login\": null,\n    \"is_superuser\": false,\n    \"username\": \"usuario123\",\n    \"first_name\": \"João\",\n    \"last_name\": \"Silva\",\n    \"email\": \"joao.silva@email.com\",\n    \"is_staff\": false,\n    \"is_active\": true,\n    \"date_joined\": \"2024-09-05T12:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Usuários",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Usuário por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4333/usuarios/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Usuário",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Usuário Atualizado\",\n    \"senha\": \"novaSenhaSegura\",\n    \"tipo\": \"admin\",\n    \"ativado\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4333/usuarios/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer <seu_token_jwt>"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4333/usuarios/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4333",
+							"path": [
+								"usuarios",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"usuario123\",\n    \"password\": \"senha123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4333/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4333",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
