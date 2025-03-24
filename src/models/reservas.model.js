@@ -35,7 +35,7 @@ const Model = {
     },
 
     async findAll() {
-        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,
+        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
             cs.nome AS nome_servico,cs.preco FROM reservas r
             LEFT JOIN auth_user a ON a.id = r.usuario_id
             LEFT JOIN core_servico cs ON cs.id = r.servico_id`;
@@ -45,12 +45,12 @@ const Model = {
     },
 
     async findByUser(user = null) {
-        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,
-            cs.nome AS nome_servico,cs.preco FROM reservas r
+        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
+            cs.nome AS nome_servico,cs.preco FROM FROM reservas r
             LEFT JOIN auth_user a ON a.id = r.usuario_id
             LEFT JOIN core_servico cs ON cs.id = r.servico_id`;
-        
-            if (!user.is_superuser) {
+
+        if (!user.is_superuser) {
             query = query + ` where a.id = '${user.id}'`;
         }
 

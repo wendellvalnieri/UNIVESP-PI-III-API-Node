@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { response_generic } from './responseHandler.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'secret_pass';
 
@@ -19,7 +20,7 @@ const authMiddleware = (req, res, next) => {
         req.user = decoded; // Armazena as informações do usuário no request
         next();
     } catch (err) {
-        return res.status(401).json({ message: 'Token inválido ou expirado.' });
+        response_generic(res, 401, false, 'Token inválido ou expirado.', err);
     }
 
 };
