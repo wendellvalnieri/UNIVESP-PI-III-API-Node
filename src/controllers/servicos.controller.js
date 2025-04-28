@@ -1,23 +1,24 @@
 import Model from '../models/servicos.model.js';
+import { response_generic, response_success } from '../middlewares/responseHandler.js';
 
 const title = "servicos";
 
 const Controller = {
     async create(req, res) {
         try {
-            const item = await Model.create(req.body);
-            res.status(201).json(item);
+            const item = await Model.create(req.body, req.user.id);
+            response_generic(res, true, `${title}_created`, item);
         } catch (error) {
-            res.status(500).json({ message: `error_creating_${title}`, error });
+            response_generic(res, 500, false, `creating_${title}`, error);
         }
     },
 
     async getAll(req, res) {
         try {
-            const items = await Model.findAll();
-            res.status(200).json(items);
+            const items = await Model.findAll(req.user);
+            response_success(res, `${title}_found`, items);
         } catch (error) {
-            res.status(500).json({ message: `error_fetching_${title}`, error });
+            response_generic(res, 500, false, `fetching_${title}`, error);
         }
     },
 
@@ -25,31 +26,31 @@ const Controller = {
         try {
             const item = await Model.findById(req.params.id);
             if (!item) {
-                return res.status(404).json({ message: `${title}_not_found` });
+                response_generic(res, 404, false, `${title}_not_found`, error);
             }
-            res.status(200).json(item);
+            response_success(res, `${title}_found`, item);
         } catch (error) {
-            res.status(500).json({ message: `error_fetching_${title}`, error });
+            response_generic(res, 500, false, `fetching_${title}`, error);
         }
     },
 
     async update(req, res) {
         try {
             const item = await Model.update(req.params.id, req.body);
+            response_success(res, `${title}_updated`, item);
             res.status(200).json(item);
         } catch (error) {
-            res.status(500).json({ message: `error_updating_${title}`, error });
+            response_generic(res, 500, false, `updating_${title}`, error);
         }
     },
 
     async delete(req, res) {
         try {
             await Model.delete(req.params.id);
-            res.status(204).json();
+            response_generic(res, 204, false, `${title}_deleted`);
         } catch (error) {
-            res.status(500).json({ message: `error_deleting_${title}`, error });
+            response_generic(res, 500, false, `deleting_${title}`, error);
         }
     }
 };
-
 export default Controller;

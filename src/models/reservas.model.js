@@ -46,7 +46,7 @@ const Model = {
 
     async findByUser(user = null) {
         let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
-            cs.nome AS nome_servico,cs.preco FROM FROM reservas r
+            cs.nome AS nome_servico,cs.preco FROM reservas r
             LEFT JOIN auth_user a ON a.id = r.usuario_id
             LEFT JOIN core_servico cs ON cs.id = r.servico_id`;
 
@@ -60,7 +60,8 @@ const Model = {
 
 
     async findById(id) {
-        const result = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [id]);
+        const query = `SELECT r.*,cs.imagem,cs.nome AS nome_servico FROM ${table} r LEFT JOIN core_servico cs ON cs.id = r.servico_id WHERE r.id = $1`;
+        const result = await pool.query(query, [id]);
         return result.rows[0];
     },
 

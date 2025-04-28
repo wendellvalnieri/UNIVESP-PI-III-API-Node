@@ -5,7 +5,7 @@ const title = "compras";
 const Controller = {
     async create(req, res) {
         try {
-            const item = await Model.create(req.body,req.user.id);
+            const item = await Model.create(req.body, req.user.id);
             res.status(201).json(item);
         } catch (error) {
             res.status(500).json({ message: `error_creating_${title}`, error });
