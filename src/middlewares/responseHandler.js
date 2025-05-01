@@ -7,7 +7,7 @@ function response_generic(res, number, success, message = "", data = []) {
     return res.status(number).json(finalData);
 }
 
-function response_success(res, message, data) {
+function response_success(res, message, data = {}) {
     return response_generic(res, 200, true, message, data);
 }
 

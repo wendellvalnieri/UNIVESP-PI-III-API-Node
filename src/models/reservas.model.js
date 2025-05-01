@@ -10,13 +10,13 @@ const baseFields = [
     { field: "data_reserva", defaultValue: new Date() },
     { field: "hora_reserva", defaultValue: new Date() },
     { field: "observacoes", defaultValue: "" },
-    { field: "status", defaultValue: 1 },
+    { field: "status", defaultValue: "agendado" },
 ];
 
 const Model = {
     async create(data, id_user = 1) {
         delete data.csrfmiddlewaretoken;
-        data.usuario = id_user;
+        data.usuario_id = id_user;
 
         const keys = Object.keys(data);
         const values = Object.values(data);
@@ -34,6 +34,12 @@ const Model = {
         return result.rows[0];
     },
 
+    async cancelar(id) {
+        const query = `update ${table} set status = 'cancelado' where id = $1`;
+        const result = await pool.query(query, [id]);
+        return result.rows[0];
+    },
+
     async findAll() {
         let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
             cs.nome AS nome_servico,cs.preco FROM reservas r
@@ -46,7 +52,7 @@ const Model = {
 
     async findByUser(user = null) {
         let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
-            cs.nome AS nome_servico,cs.preco FROM reservas r
+            cs.nome AS nome_servico,cs.preco,r.observacoes FROM reservas r
             LEFT JOIN auth_user a ON a.id = r.usuario_id
             LEFT JOIN core_servico cs ON cs.id = r.servico_id`;
 

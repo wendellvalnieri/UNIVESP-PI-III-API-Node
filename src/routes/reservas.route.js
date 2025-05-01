@@ -5,6 +5,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 const router = express.Router();
 
 router.post('/', authMiddleware, ReservasController.create);
+router.delete('/cancelar/:id', authMiddleware, ReservasController.cancelar);
 router.put('/:id', authMiddleware, ReservasController.update);
 router.delete('/:id', authMiddleware, ReservasController.delete);
 

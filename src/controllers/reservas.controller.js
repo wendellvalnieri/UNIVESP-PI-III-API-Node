@@ -7,7 +7,7 @@ const Controller = {
     async create(req, res) {
         try {
             const item = await Model.create(req.body, req.user.id);
-            response_generic(res, true, `${title}_created`, item);
+            response_success(res,`${title}_created`, item);
         } catch (error) {
             response_generic(res, 500, false, `creating_${title}`, error);
         }
@@ -43,6 +43,14 @@ const Controller = {
         }
     },
 
+    async cancelar(req, res) {
+        try {
+            const item = await Model.cancelar(req.params.id);
+            response_success(res, `${title}_cancelled`, item);
+        } catch (error) {
+            response_generic(res, 500, false, `cancelled_${title}`, error);
+        }
+    },
     async update(req, res) {
         try {
             const item = await Model.update(req.params.id, req.body);
