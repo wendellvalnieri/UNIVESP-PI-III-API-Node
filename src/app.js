@@ -24,7 +24,7 @@ app.use('/auth', authRoutes);
 app.get('/', (req, res) => {
     res.send('Bem-vindo');
 });
-
+    
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 4333;

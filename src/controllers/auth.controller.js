@@ -41,6 +41,8 @@ const Controller = {
                     token: token,
                     is_superuser: usuario.is_superuser,
                     is_staff: usuario.is_staff,
+                    email: usuario.email,
+                    nome: usuario.first_name,
                 },
             }
 
