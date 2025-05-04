@@ -40,3 +40,6 @@ src/migrations/*_compiled.js
 # IDE specific files
 .vscode/
 .idea/
+
+
+public

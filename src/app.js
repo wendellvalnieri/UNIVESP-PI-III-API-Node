@@ -21,7 +21,7 @@ app.use('/compras', comprasRotas);
 app.use('/reservas', reservasRotas);
 app.use('/auth', authRoutes);
 
-app.get('/', (req, res) => {
+app.get('/', (req, res) => {6
     res.send('Bem-vindo');
 });
     

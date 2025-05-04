@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "babel src --out-dir dist",
+    "build": "babel src --out-dir public",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --forceExit ",
     "start": "node dist/app.js",
     "dev": "nodemon src/app.js"
