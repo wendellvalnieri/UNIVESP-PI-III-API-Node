@@ -24,12 +24,13 @@ app.use('/reservas', reservasRotas);
 app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Bem-vindo');
+  res.send('Bem-vindo');
 });
 
 app.use(errorHandler);
 
-// Conectar ao banco
+// Conecta ao banco
 await connectToDB();
 
-export const handler = serverless(app);
+// Exporta como função default (requisito da Vercel)
+export default serverless(app);
