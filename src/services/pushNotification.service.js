@@ -1,6 +1,7 @@
-const admin = require('firebase-admin');
-const fetch = require('node-fetch');
-const apn = require('apn');
+import admin from 'firebase-admin';
+import fetch from 'node-fetch';
+import apn from 'apn';
+import axios from 'axios';
 
 const initializeFirebase = () => {
     if (!admin.apps.length) {
@@ -15,6 +16,8 @@ const initializeFirebase = () => {
     }
     return admin;
 };
+
+
 
 const initializeApn = () => {
     return new apn.Provider({
@@ -132,3 +135,34 @@ export const sendPushNotification = async (push_key, message) => {
         throw error;
     }
 };
+
+export const sendPushNotificationRest = async (tokens, data) => {
+    let finalData = JSON.stringify({
+        "message": {
+            "token": tokens,
+            "notification": {
+                "body": data.message,
+                "title": data.title || 'Nova notificação'
+            }
+        }
+    });
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://fcm.googleapis.com/v1/projects/tamy-salao-eaf05/messages:send',
+        headers: {
+            'Authorization': `Bearer ${process.env.FIREBASE_TOKEN}`,
+            'Content-Type': 'application/json'
+        },
+        data: finalData
+    };
+
+    axios.request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}

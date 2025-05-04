@@ -1,4 +1,5 @@
-import { sendPushNotification } from '../services/pushNotification.service.js'
+import { sendPushNotification, sendPushNotificationRest } from '../services/pushNotification.service.js'
+import pool from '../config/db.js';
 
 const Model = {
     /**
@@ -24,6 +25,24 @@ const Model = {
             return resultado;
         } catch (erro) {
             console.error('Falha ao enviar notificação:', erro);
+        }
+    },
+    async enviarNotificacaoRest(push_key, data) {
+        try {
+            const resultado = await sendPushNotificationRest(push_key, data);
+            console.log('Notificação enviada:', resultado);
+            return resultado;
+        } catch (erro) {
+            console.error('Falha ao enviar notificação:', erro);
+        }
+    },
+    async registrarToken(push_key, id_user) {
+        try {
+            const query = `update auth_user set token_message = '${push_key}' where id = ${id_user}`;
+            const result = await pool.query(query);
+            return result.rows[0];
+        } catch (erro) {
+            console.error('Falha ao registrar token:', erro);
         }
     }
 };

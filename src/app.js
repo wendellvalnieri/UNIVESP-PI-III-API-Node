@@ -7,6 +7,7 @@ import usuariosRotas from './routes/usuarios.route.js';
 import comprasRotas from './routes/compras.route.js';
 import reservasRotas from './routes/reservas.route.js';
 import authRoutes from './routes/auth.route.js';
+import notificacoesRotas from './routes/notificacoes.route.js';
 import errorHandler from './middlewares/errorHandler.js';
 import { connectToDB } from './config/db.js';
 
@@ -19,9 +20,10 @@ app.use('/servicos', servicosRotas);
 app.use('/usuarios', usuariosRotas);
 app.use('/compras', comprasRotas);
 app.use('/reservas', reservasRotas);
+app.use('/notificacoes', notificacoesRotas);
 app.use('/auth', authRoutes);
 
-app.get('/', (req, res) => {6
+app.get('/', (req, res) => {
     res.send('Bem-vindo');
 });
     

@@ -4,6 +4,9 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', authMiddleware, Controller);
+router.get('/', Controller.sendNotificationRest);
+router.post('/register-token', authMiddleware, Controller.registerToken);
+//router.post('/', authMiddleware, Controller.sendNotificationRest);
+router.post('/fcm', authMiddleware, Controller.sendNotification);
 
 export default router;
