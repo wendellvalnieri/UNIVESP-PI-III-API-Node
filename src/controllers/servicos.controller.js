@@ -38,7 +38,6 @@ const Controller = {
         try {
             const item = await Model.update(req.params.id, req.body);
             response_success(res, `${title}_updated`, item);
-            res.status(200).json(item);
         } catch (error) {
             response_generic(res, 500, false, `updating_${title}`, error);
         }

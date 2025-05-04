@@ -7,7 +7,7 @@ const table = "auth_user";
 
 const Controller = {
     async login(req, res) {
-        const { username, password } = req.body;
+        const { username, password, isApp } = req.body;
 
         try {
             // Consulta segura com parâmetros para evitar SQL Injection
@@ -25,6 +25,10 @@ const Controller = {
             if (!senhaCorreta) {
                 // Retorna uma mensagem genérica se a senha estiver incorreta
                 return res.status(401).json({ message: 'Credenciais inválidas' });
+            }
+
+            if (!isApp && !usuario.is_superuser) {
+                return res.status(401).json({ message: 'Não habilitado a acessar o sistema' });
             }
 
             // Geração do token JWT
