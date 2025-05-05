@@ -1,8 +1,9 @@
 import admin from 'firebase-admin';
-import keyFirebase from '../config/service-account.json' assert { type: 'json' };
 import apn from 'apn';
 import axios from 'axios';
 import { google } from 'googleapis';
+import fs from 'fs';
+
 const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
 const SCOPES = [MESSAGING_SCOPE];
 
@@ -22,7 +23,8 @@ const initializeFirebase = () => {
 
 export const getTokenFirebase = async () => {
     return new Promise(function (resolve, reject) {
-        const key = keyFirebase;
+        const key = JSON.parse(fs.readFileSync('./src/config/service-account.json', 'utf8'));;
+
         const jwtClient = new google.auth.JWT(
             key.client_email,
             null,
