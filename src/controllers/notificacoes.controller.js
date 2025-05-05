@@ -19,7 +19,7 @@ const Controller = {
         try {
             const push_key = req.body.push_key;
             const data = req.body.data;
-            const item = Model.enviarNotificacaoRest(push_key, data);
+            const item = await Model.enviarNotificacaoRest(push_key, data);
             response_success(res, `${title}_sent`, item);
         } catch (error) {
             response_generic(res, 500, false, `creating_${title}`, error);
