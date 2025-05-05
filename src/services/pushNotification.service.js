@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 import apn from 'apn';
 import axios from 'axios';
 import { google } from 'googleapis';
-import { service_account } from '../config/service-account';
+import { service_account } from '../config/service-account.js';
 
 const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
 const SCOPES = [MESSAGING_SCOPE];
