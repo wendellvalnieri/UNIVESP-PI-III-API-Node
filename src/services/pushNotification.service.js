@@ -1,7 +1,10 @@
 import admin from 'firebase-admin';
-import fetch from 'node-fetch';
+import keyFirebase from '../config/service-account.json' assert { type: 'json' };
 import apn from 'apn';
 import axios from 'axios';
+import { google } from 'googleapis';
+const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
+const SCOPES = [MESSAGING_SCOPE];
 
 const initializeFirebase = () => {
     if (!admin.apps.length) {
@@ -17,8 +20,25 @@ const initializeFirebase = () => {
     return admin;
 };
 
-
-
+export const getTokenFirebase = async () => {
+    return new Promise(function (resolve, reject) {
+        const key = keyFirebase;
+        const jwtClient = new google.auth.JWT(
+            key.client_email,
+            null,
+            key.private_key,
+            SCOPES,
+            null
+        );
+        jwtClient.authorize(function (err, tokens) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(tokens);
+        });
+    });
+}
 const initializeApn = () => {
     return new apn.Provider({
         token: {
@@ -29,8 +49,6 @@ const initializeApn = () => {
         production: process.env.NODE_ENV === 'production'
     });
 };
-
-
 
 const sendFcmNotification = async (token, message) => {
     const firebase = initializeFirebase();
@@ -137,6 +155,8 @@ export const sendPushNotification = async (push_key, message) => {
 };
 
 export const sendPushNotificationRest = async (tokens, data) => {
+    let responseGetTokenFirebase = await getTokenFirebase();
+
     let finalData = JSON.stringify({
         "message": {
             "token": tokens,
@@ -152,7 +172,7 @@ export const sendPushNotificationRest = async (tokens, data) => {
         maxBodyLength: Infinity,
         url: 'https://fcm.googleapis.com/v1/projects/tamy-salao-eaf05/messages:send',
         headers: {
-            'Authorization': `Bearer ${process.env.FIREBASE_TOKEN}`,
+            'Authorization': `Bearer ${responseGetTokenFirebase.access_token}`,
             'Content-Type': 'application/json'
         },
         data: finalData

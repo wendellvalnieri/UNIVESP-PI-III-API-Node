@@ -1,6 +1,8 @@
 import Model from '../models/notificacoes.model.js';
 import { response_generic, response_success } from '../middlewares/responseHandler.js';
+
 const title = "notificacoes";
+
 
 const Controller = {
     async sendNotification(req, res) {
@@ -19,6 +21,32 @@ const Controller = {
             const data = req.body.data;
             const item = Model.enviarNotificacaoRest(push_key, data);
             response_success(res, `${title}_sent`, item);
+        } catch (error) {
+            response_generic(res, 500, false, `creating_${title}`, error);
+        }
+    },
+    async getToken(req, res) {
+        try {
+            return new Promise(function (resolve, reject) {
+                const key = keyFirebase;
+                const jwtClient = new google.auth.JWT(
+                    key.client_email,
+                    null,
+                    key.private_key,
+                    SCOPES,
+                    null
+                );
+                jwtClient.authorize(function (err, tokens) {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    console.log(tokens.access_token);
+                    resolve(tokens.access_token);
+                    response_success(res, `${title}_sent`, tokens);
+                });
+            });
+
         } catch (error) {
             response_generic(res, 500, false, `creating_${title}`, error);
         }
