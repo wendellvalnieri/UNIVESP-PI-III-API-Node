@@ -7,7 +7,7 @@ const Controller = {
     async create(req, res) {
         try {
             const item = await Model.create(req.body, req.user.id);
-            response_generic(res, true, `${title}_created`, item);
+            response_success(res, `${title}_created`, item);
         } catch (error) {
             response_generic(res, 500, false, `creating_${title}`, error);
         }
