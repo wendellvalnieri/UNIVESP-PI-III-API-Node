@@ -41,22 +41,31 @@ const Model = {
     },
 
     async findAll() {
-        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
-            cs.nome AS nome_servico,cs.preco FROM reservas r
-            LEFT JOIN auth_user a ON a.id = r.usuario_id
-            LEFT JOIN core_servico cs ON cs.id = r.servico_id order by r.data_reserva desc, r.hora_reserva desc `;
+        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,
+        CASE WHEN r.data_reserva < CURRENT_DATE OR (r.data_reserva = CURRENT_DATE AND r.hora_reserva < CURRENT_TIME) THEN 'finalizado'
+        ELSE r.status END AS status,cs.nome AS nome_servico,cs.preco FROM reservas r 
+        LEFT JOIN auth_user a ON a.id = r.usuario_id 
+        LEFT JOIN core_servico cs ON cs.id = r.servico_id ORDER BY r.data_reserva DESC, r.hora_reserva DESC `;
         const result = await pool.query(query);
         return result.rows;
     },
 
     async findByUser(user = null) {
-        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,r.status,        
-            cs.nome AS nome_servico,cs.preco,r.observacoes FROM reservas r
-            LEFT JOIN auth_user a ON a.id = r.usuario_id
-            LEFT JOIN core_servico cs ON cs.id = r.servico_id `;
+        let query = `SELECT r.id,r.data_reserva,r.hora_reserva,a.first_name AS nome_usuario,cs.imagem,
+                CASE 
+                    WHEN r.data_reserva < CURRENT_DATE OR 
+                         (r.data_reserva = CURRENT_DATE AND r.hora_reserva < CURRENT_TIME) 
+                    THEN 'finalizado'
+                    ELSE r.status
+                END AS status,        
+                cs.nome AS nome_servico,cs.preco,r.observacoes FROM reservas r
+                LEFT JOIN auth_user a ON a.id = r.usuario_id
+                LEFT JOIN core_servico cs ON cs.id = r.servico_id `;
 
         if (!user.is_superuser) {
             query = query + ` where a.id = '${user.id}' order by r.data_reserva desc, r.hora_reserva desc `;
+        } else {
+            query = query + ` order by r.data_reserva desc, r.hora_reserva desc `;
         }
 
         const result = await pool.query(query);
